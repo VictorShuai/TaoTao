@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.vs.taotao.model.Datagrid;
 import org.vs.taotao.pojo.TbItem;
 import org.vs.taotao.service.ItemService;
+import org.vs.taotao.utils.TaotaoResult;
 
 @Controller
 @RequestMapping("/item")
@@ -32,4 +33,11 @@ public class ItemController {
 		return datagrid;
 	}
 	
+	// 保存商品(商品信息，详情描述信息以及规格参数)
+	@RequestMapping("/save")
+	@ResponseBody
+	public TaotaoResult saveItem(TbItem item, String desc, String itemParams) {
+		TaotaoResult result = this.itemService.saveItem(item, desc, itemParams);
+		return result;
+	}
 }

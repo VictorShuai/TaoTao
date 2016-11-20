@@ -17,6 +17,10 @@
 </div>
 <script>
 
+	/* function myformat(value, row, index) {
+		return new Date(value).toLocaleString();
+	}
+ */
 	function formatItemParamData(value , index){
 		var json = JSON.parse(value);
 		var array = [];

@@ -31,7 +31,6 @@
 		<jedis.version>2.7.2</jedis.version>
 		<solrj.version>4.10.3</solrj.version>
 	</properties>
-	<!-- Ö»¶šÒåÒÀÀµµÄ°æ±Ÿ£¬²¢²»ÊµŒÊÒÀÀµ -->
 	<dependencyManagement>
 		<dependencies>
 			<!-- time solve -->
@@ -186,7 +185,6 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<!-- ×ÊÔŽÎÄŒþ¿œ±Ž²åŒþ -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -195,14 +193,13 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<!-- java±àÒë²åŒþ -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
