@@ -92,6 +92,14 @@
     from tb_content_category
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectCountByParentId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select 
+    	count(*)
+    from tb_content_category
+    where parent_id = #{id,jdbcType=BIGINT}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content_category
     where id = #{id,jdbcType=BIGINT}
@@ -103,6 +111,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.vs.taotao.pojo.TbContentCategory" >
+  	<selectKey keyProperty="id" resultType="long" order="AFTER">
+  		select last_insert_id();
+  	</selectKey>
     insert into tb_content_category (id, parent_id, name, 
       status, sort_order, is_parent, 
       created, updated)

@@ -19,6 +19,8 @@ public interface TbContentCategoryMapper {
     List<TbContentCategory> selectByExample(TbContentCategoryExample example);
 
     TbContentCategory selectByPrimaryKey(Long id);
+    
+    long selectCountByParentId(Long parentId);
 
     int updateByExampleSelective(@Param("record") TbContentCategory record, @Param("example") TbContentCategoryExample example);
 
