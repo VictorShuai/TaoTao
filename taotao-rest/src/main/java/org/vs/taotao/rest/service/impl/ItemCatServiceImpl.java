@@ -3,26 +3,57 @@ package org.vs.taotao.rest.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.vs.taotao.mapper.TbItemCatMapper;
 import org.vs.taotao.pojo.TbItemCat;
 import org.vs.taotao.pojo.TbItemCatExample;
 import org.vs.taotao.pojo.TbItemCatExample.Criteria;
+import org.vs.taotao.rest.dao.RedisDao;
 import org.vs.taotao.rest.pojo.CatNode;
 import org.vs.taotao.rest.pojo.CatResult;
 import org.vs.taotao.rest.service.ItemCatService;
+import org.vs.taotao.utils.JsonUtils;
 
 @Service
 public class ItemCatServiceImpl implements ItemCatService {
 	
 	@Autowired
 	private TbItemCatMapper  itemCatMapper;
+	@Autowired
+	private RedisDao redisDao;
+	
+	@Value("${cache_index_category}")
+	private String cacheIndexCategory;
 
 	@Override
 	public CatResult findItemCat() {
+		
+		// 从缓存中拿
+		try {
+			String value = this.redisDao.get(cacheIndexCategory);
+			if (StringUtils.isNotBlank(value)) {
+				CatResult result = JsonUtils.jsonToPojo(value, CatResult.class);
+				return result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		CatResult catResult = new CatResult();
 		catResult.setData(findCateNodeByParentId(0));
+		
+		// 放入缓存
+		try {
+			String value = JsonUtils.objectToJson(catResult);
+			this.redisDao.set(cacheIndexCategory, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return catResult;
 	}
 	
